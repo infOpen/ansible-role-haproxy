@@ -7,7 +7,7 @@
 #-------------------------------------------------------------------------------
 
 # Check comptability 1.5 version
-- fail : Check if stable 1.5 version exists
+- fail : Check if stable 1.5 version not exists
   when :
     - haproxy_version_type         == "stable"
     - ansible_distribution_release == "precise"
@@ -62,6 +62,9 @@
     - ansible_distribution_version == "14.04"
     - haproxy_version_type         == "stable"
 
+
+- debug :
+    var : haproxy_stable_trusty_install
 
 - name : Install packages
   apt  :
