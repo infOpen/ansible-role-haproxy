@@ -4,5 +4,7 @@
 
 - hosts: localhost
   remote_user: root
+  vars :
+    haproxy_version_type : "latest"
   roles:
     - ansible-role-haproxy
