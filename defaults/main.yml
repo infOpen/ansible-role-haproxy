@@ -9,6 +9,9 @@ haproxy_version_type   : "stable"
 # Path prefix
 haproxy_path_prefix_etc : "/etc/haproxy"
 
+# Final config file
+haproxy_config_location : "/etc/haproxy/haproxy.cfg"
+
 # Data variables
 haproxy_frontends : []
 haproxy_backends  : []

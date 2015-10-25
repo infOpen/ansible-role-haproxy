@@ -57,6 +57,6 @@
 - name : Assemble the final configuration file
   assemble :
     src    : "{{ haproxy_path_prefix_etc }}/conf.d"
-    dest   : "{{ config_location }}"
+    dest   : "{{ haproxy_config_location }}"
     backup : True
   notify : restart haproxy
