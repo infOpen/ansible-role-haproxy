@@ -63,9 +63,6 @@
     - haproxy_version_type         == "stable"
 
 
-- debug :
-    var : haproxy_stable_trusty_install
-
 - name : Install packages
   apt  :
     name  : "{{ item }}"
@@ -73,4 +70,4 @@
     cache_valid_time : 3600
   with_items : "{{ haproxy_packages }}"
   when :
-    - haproxy_stable_trusty_install is undefined
+    - haproxy_stable_trusty_install.skipped == True
