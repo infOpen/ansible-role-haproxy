@@ -21,7 +21,7 @@
 
 - name: Generate the default configuration
   template :
-    src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/default.conf.j2"
+    src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/defaults.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/02-default.cfg"
   when : haproxy_defaults
 
