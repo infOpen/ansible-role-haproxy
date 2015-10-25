@@ -94,11 +94,10 @@ global
 {% if haproxy_global_process_mgmt.log is defined %}
 {% for log in haproxy_global_process_mgmt.log %}
     log {{ log.address }} {{ log.facility }}{% if log.max_level is defined %} {{ log.max_level }}{% endif %}{% if log.min_level is defined %} {{ log.min_level }}{% endif %}
-
-{% if log.format is defined %}
-    log-format {{ log.format }}
-{% endif %}
 {% endfor %}
+{% endif %}
+{% if haproxy_global_process_mgmt.log_format is defined %}
+    log-format {{ haproxy_global_process_mgmt.log_format }}
 {% endif %}
 
 {% if haproxy_global_process_mgmt.log_send_hostname is defined %}

@@ -182,8 +182,8 @@ listen {{ haproxy_listen.name }}
     log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
     {% endfor %}
 {% endif %}
-{% if log.format is defined %}
-    log-format {{ log.format }}
+{% if haproxy_listen.log_format is defined %}
+    log-format {{ haproxy_listen.log_format }}
 {% endif %}
 
 {% if haproxy_listen.max_keep_alive_queue is defined %}

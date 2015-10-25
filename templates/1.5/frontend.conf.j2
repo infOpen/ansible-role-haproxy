@@ -134,8 +134,8 @@ frontend {{ haproxy_frontend.name }}
     log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
     {% endfor %}
 {% endif %}
-{% if log.format is defined %}
-    log-format {{ log.format }}
+{% if haproxy_frontend.log_format is defined %}
+    log-format {{ haproxy_frontend.log_format }}
 {% endif %}
 
 {% if haproxy_frontend.maxconn is defined %}
