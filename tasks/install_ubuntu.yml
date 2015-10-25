@@ -1,0 +1,75 @@
+---
+
+# HAProxy Ubuntu specific installation steps
+
+#-------------------------------------------------------------------------------
+# Repository configuration
+#-------------------------------------------------------------------------------
+
+# Check comptability 1.5 version
+- name : Check if stable 1.5 version exists
+  assert :
+    that :
+      - haproxy_version_type         == "stable"
+      - ansible_distribution_release == "precise"
+      - ansible_distribution_version == "12.04"
+
+- name : Stable 1.6 version not exists
+  assert :
+    that :
+      - haproxy_version_type   == "stable"
+      - haproxy_version_number == "1.6"
+
+
+# Enable dedicated PPA to install latest version
+- name : Enable PPA for latest haproxy for the version
+  apt_repository :
+    repo  : "ppa:vbernat/haproxy-{{ haproxy_version_number }}"
+    state : present
+    update_cache : True
+  when :
+    - haproxy_version_type == "latest"
+
+
+# Enable dedicated PPA to install latest 1.5 on ubuntu Trusty
+- name : Enable PPA for stable 1.5 on Trusty
+  apt_repository :
+    repo : "deb http://archive.ubuntu.com/ubuntu trusty-backports main universe"
+    state : present
+    update_cache : True
+  when :
+    - haproxy_version_number       == "1.5"
+    - haproxy_version_type         == "stable"
+    - ansible_distribution_release == "trusty"
+    - ansible_distribution_version == "14.04"
+
+
+#-------------------------------------------------------------------------------
+# Package Installation
+#-------------------------------------------------------------------------------
+
+- name : Include specific vars
+  include_vars : "{{ role_path }}/vars/Debian.yml"
+
+
+- name : Install stable packages for trusty
+  apt  :
+    name  : "{{ item }}"
+    state : present
+    cache_valid_time : 3600
+    default_release  : "trusty-backports"
+  register   : haproxy_stable_trusty_install
+  with_items : "{{ haproxy_packages }}"
+  when :
+    - ansible_distribution_version == "14.04"
+    - haproxy_version_type         == "stable"
+
+
+- name : Install packages
+  apt  :
+    name  : "{{ item }}"
+    state : present
+    cache_valid_time : 3600
+  with_items : "{{ haproxy_packages }}"
+  when :
+    - haproxy_stable_trusty_install is undefined

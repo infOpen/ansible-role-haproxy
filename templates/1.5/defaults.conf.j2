@@ -1,0 +1,210 @@
+#{{ ansible_managed }}
+
+#-------------------------------------------------------------------------------
+# Defaults configuration
+#-------------------------------------------------------------------------------
+
+defaults
+
+{% if haproxy_defaults.mode is defined %}
+    mode {{ haproxy_defaults.mode }}
+{% endif %}
+
+{% if haproxy_defaults.backlog is defined %}
+    backlog {{ haproxy_defaults.backlog }}
+{% endif %}
+
+{% if haproxy_defaults.balances is defined and haproxy_defaults.balances %}
+    {% for balance in haproxy_defaults.balances %}
+    {% if balance.url_param is defined and balance.url_param == True %}
+    balance url_param {{ balance.param }}{% if balance.check_post is defined %}{{ balance.check_post }}{% endif %}
+    {% else %}
+    balance {{ balance.algorithm }} {{ balance.arguments }}
+    {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_defaults.bind_process is defined %}
+    bind-process {{ haproxy_defaults.bind_process }}
+{% endif %}
+
+{% if haproxy_defaults.compression is defined %}
+    {% if haproxy_defaults.compression.algo is defined and haproxy_defaults.compression.algo %}
+    compression algo {{ haproxy_defaults.compression.algo | join(' ') }}
+    {% endif %}
+    {% if haproxy_defaults.compression.type is defined and haproxy_defaults.compression.type %}
+    compression type {{ haproxy_defaults.compression.type | join(' ') }}
+    {% endif %}
+    {% if haproxy_defaults.compression.offload is defined and haproxy_defaults.compression.offload == True %}
+    compression offload
+    {% endif %}
+{% endif %}
+
+{% if haproxy_defaults.cookies is defined and haproxy_defaults.cookies %}
+    {% for cookie in haproxy_defaults.cookies %}
+    cookie {{ cookie.name }} {{ cookie.options }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_defaults.default_server_options is defined and haproxy_defaults.default_server_options %}
+    default-server {{ haproxy_defaults.default_server_options | join(' ') }}
+{% endif %}
+{% if haproxy_defaults.default_backend is defined %}
+    default-backend {{ haproxy_defaults.default_backend }}
+{% endif %}
+
+{% if haproxy_defaults.disabled is defined and haproxy_defaults.disabled %}
+    disabled
+{% endif %}
+{% if haproxy_defaults.enabled is defined and haproxy_defaults.enabled %}
+    enabled
+{% endif %}
+
+{% if haproxy_defaults.errorfile is defined and haproxy_defaults.errorfile %}
+{% for item in haproxy_defaults.errorfile %}
+    errorfile {{ item.code }} {{ item.file }}
+{% endfor %}
+{% endif %}
+
+{% if haproxy_defaults.errorloc is defined and haproxy_defaults.errorloc %}
+{% for item in haproxy_defaults.errorloc %}
+    errorloc {{ item.code }} {{ item.url }}
+{% endfor %}
+{% endif %}
+
+{% if haproxy_defaults.errorloc302 is defined and haproxy_defaults.errorloc302 %}
+{% for item in haproxy_defaults.errorloc302 %}
+    errorloc302 {{ item.code }} {{ item.url }}
+{% endfor %}
+{% endif %}
+{% if haproxy_defaults.errorloc303 is defined and haproxy_defaults.errorloc303 %}
+{% for item in haproxy_defaults.errorloc303 %}
+    errorloc303 {{ item.code }} {{ item.url }}
+{% endfor %}
+{% endif %}
+
+{% if haproxy_defaults.fullconn is defined %}
+    fullconn {{ haproxy_defaults.fullconn }}
+{% endif %}
+
+{% if haproxy_defaults.grace is defined %}
+    grace {{ haproxy_defaults.grace }}
+{% endif %}
+
+{% if haproxy_defaults.hash_type is defined %}
+    hash-type {{ haproxy_defaults.hash_type.method }} {{ haproxy_defaults.hash_type.function }} {{ haproxy_defaults.hash_type.modifier }}
+{% endif %}
+
+{% if haproxy_defaults.http_check_disable_on_404 is defined and haproxy_defaults.http_check_disable_on_404 == True %}
+    http-check disable-on-404
+{% endif %}
+{% if haproxy_defaults.http_check_expect is defined and haproxy_defaults.http_check_expect %}
+    {% for item in haproxy_defaults.http_check_expect %}
+    http-check expect {% if item.inverse is defined and item.inverse == True %} ! {% endif %} {{ item.match }} {{ item.pattern }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_defaults.http_check_send_state is defined and haproxy_defaults.http_check_send_state == True %}
+    http-check send-state
+{% endif %}
+
+{% if haproxy_defaults.http_send_name_header is defined %}
+    http-send-name-header {{ haproxy_defaults.http_send_name_header }}
+{% endif %}
+
+
+{% if haproxy_defaults.log is defined %}
+    {% for log in haproxy_defaults.log %}
+    log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
+    {% endfor %}
+{% endif %}
+{% if log.format is defined %}
+    log-format {{ log.format }}
+{% endif %}
+
+{% if haproxy_defaults.max_keep_alive_queue is defined %}
+    max-keep-alive-queue {{ haproxy_defaults.max_keep_alive_queue }}
+{% endif %}
+
+{% if haproxy_defaults.maxconn is defined %}
+    max-keep-alive-queue {{ haproxy_defaults.maxconn }}
+{% endif %}
+
+{% if haproxy_defaults.monitor_net is defined %}
+    monitor-net {{ haproxy_defaults.monitor_net }}
+{% endif %}
+
+{% if haproxy_defaults.monitor_uri is defined %}
+    monitor-uri {{ haproxy_defaults.monitor_uri }}
+{% endif %}
+
+
+{% if haproxy_defaults.options is defined %}
+    {% for option in haproxy_defaults.options %}
+    option {{ option }}
+    {% endfor %}
+{% endif %}
+
+
+{% if haproxy_defaults.persist_rdp_cookie is defined and haproxy_defaults.persist_rdp_cookie == True %}
+    persist rdp-cookie {{ haproxy_defaults.persist_rdp_cookie_name }}
+{% endif %}
+
+{% if haproxy_defaults.rate_limit_sessions is defined %}
+    rate-limit sessions {{ haproxy_defaults.rate_limit_sessions }}
+{% endif %}
+
+
+{% if haproxy_defaults.retries is defined %}
+    retries {{ haproxy_defaults.retries }}
+{% endif %}
+
+{% if haproxy_defaults.source is defined %}
+    retries {{ haproxy_defaults.source }}
+{% endif %}
+
+{% if haproxy_defaults.stats is defined %}
+    {% if haproxy_defaults.stats.enabled is defined and haproxy_defaults.stats.enabled == True %}
+    stats enable
+    {% endif %}
+    {% if haproxy_defaults.stats.hide_version is defined and haproxy_defaults.stats.hide_version == True %}
+    stats hide-version
+    {% endif %}
+    {% if haproxy_defaults.stats.uri is defined %}
+    stats uri {{ haproxy_defaults.stats.uri }}
+    {% endif %}
+    {% if haproxy_defaults.stats.realm is defined %}
+    stats realm {{ haproxy_defaults.stats.realm }}
+    {% endif %}
+    {% if haproxy_defaults.stats.auth is defined %}
+    stats auth {{ haproxy_defaults.stats.auth }}
+    {% endif %}
+    {% if haproxy_defaults.stats.refresh is defined %}
+    stats refresh {{ haproxy_defaults.stats.refresh }}
+    {% endif %}
+    {% if haproxy_defaults.stats.show_desc is defined %}
+    stats show-desc {{ haproxy_defaults.stats.show_desc }}
+    {% endif %}
+    {% if haproxy_defaults.stats.show_legends is defined  and haproxy_defaults.stats.show_legends == True %}
+    stats show-legends
+    {% endif %}
+    {% if haproxy_defaults.stats.scope is defined %}
+    stats scope {{ haproxy_defaults.stats.scope }}
+    {% endif %}
+    {% if haproxy_defaults.stats.show_node is defined %}
+    stats show-node {{ haproxy_defaults.stats.show_node }}
+    {% endif %}
+{% endif %}
+
+
+{% if haproxy_defaults.timeout is defined %}
+    {% for category in haproxy_defaults.timeout %}
+    timeout {{ category.name }} {{ category.value }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_defaults.unique_id_format is defined %}
+    unique-id-format {{ haproxy_defaults.unique_id_format }}
+{% endif %}
+{% if haproxy_defaults.unique_id_header is defined %}
+    unique-id-header {{ haproxy_defaults.unique_id_header }}
+{% endif %}

@@ -1,0 +1,460 @@
+#{{ ansible_managed }}
+
+#-------------------------------------------------------------------------------
+# Listen configuration
+#-------------------------------------------------------------------------------
+
+{% for haproxy_listen in haproxy_listens %}
+listen {{ haproxy_listen.name }}
+
+{% if haproxy_listen.acl is defined and haproxy_listen.acl %}
+    {% for acl_item in haproxy_listen.acl %}
+    acl {{ acl_item }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.appsession is defined %}
+    appsession {{ haproxy_listen.appsession }}
+{% endif %}
+
+{% if haproxy_listen.mode is defined %}
+    mode {{ haproxy_listen.mode }}
+{% endif %}
+
+{% if haproxy_listen.backlog is defined %}
+    backlog {{ haproxy_listen.backlog }}
+{% endif %}
+
+{% if haproxy_listen.balances is defined and haproxy_listen.balances %}
+    {% for balance in haproxy_listen.balances %}
+    {% if balance.url_param is defined and balance.url_param == True %}
+    balance url_param {{ balance.param }}{% if balance.check_post is defined %}{{ balance.check_post }}{% endif %}
+    {% else %}
+    balance {{ balance.algorithm }} {{ balance.arguments }}
+    {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.bind is defined and haproxy_listen.bind %}
+    {% for bind in haproxy_listen.bind %}
+    bind {{ bind }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.bind_process is defined %}
+    bind-process {{ haproxy_listen.bind_process }}
+{% endif %}
+
+{% if haproxy_listen.block is defined and haproxy_listen.block %}
+    {% for block_item in haproxy_listen.block %}
+    block {{ block_item }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.capture_cookie is defined %}
+    capture cookie {{ haproxy_listen.capture_cookie }}
+{% endif %}
+
+{% if haproxy_listen.capture_request_header is defined and haproxy_listen.capture_request_header %}
+    {% for crh_item in haproxy_listen.capture_request_header %}
+    capture request header {{ crh_item.name }} len {{ crh_item.length }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.capture_response_header is defined and haproxy_listen.capture_response_header %}
+    {% for crh_item in haproxy_listen.capture_response_header %}
+    capture response header {{ crh_item.name }} len {{ crh_item.length }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.compression is defined %}
+    {% if haproxy_listen.compression.algo is defined and haproxy_listen.compression.algo %}
+    compression algo {{ haproxy_listen.compression.algo | join(' ') }}
+    {% endif %}
+    {% if haproxy_listen.compression.type is defined and haproxy_listen.compression.type %}
+    compression type {{ haproxy_listen.compression.type | join(' ') }}
+    {% endif %}
+    {% if haproxy_listen.compression.offload is defined and haproxy_listen.compression.offload == True %}
+    compression offload
+    {% endif %}
+{% endif %}
+
+{% if haproxy_listen.cookies is defined and haproxy_listen.cookies %}
+    {% for cookie in haproxy_listen.cookies %}
+    cookie {{ cookie.name }} {{ cookie.options }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.default_server_options is defined and haproxy_listen.default_server_options %}
+    default-server {{ haproxy_listen.default_server_options | join(' ') }}
+{% endif %}
+{% if haproxy_listen.default_backend is defined %}
+    default-backend {{ haproxy_listen.default_backend }}
+{% endif %}
+
+{% if haproxy_listen.description is defined %}
+    description {{ haproxy_listen.description }}
+{% endif %}
+
+{% if haproxy_listen.disabled is defined and haproxy_listen.disabled %}
+    disabled
+{% endif %}
+{% if haproxy_listen.dispatch is defined %}
+    dispatch {{ haproxy_listen.dispatch }}
+{% endif %}
+{% if haproxy_listen.enabled is defined and haproxy_listen.enabled %}
+    enabled
+{% endif %}
+
+{% if haproxy_listen.errorfile is defined and haproxy_listen.errorfile %}
+{% for item in haproxy_listen.errorfile %}
+    errorfile {{ item.code }} {{ item.file }}
+{% endfor %}
+{% endif %}
+
+{% if haproxy_listen.errorloc is defined and haproxy_listen.errorloc %}
+{% for item in haproxy_listen.errorloc %}
+    errorloc {{ item.code }} {{ item.url }}
+{% endfor %}
+{% endif %}
+
+{% if haproxy_listen.errorloc302 is defined and haproxy_listen.errorloc302 %}
+{% for item in haproxy_listen.errorloc302 %}
+    errorloc302 {{ item.code }} {{ item.url }}
+{% endfor %}
+{% endif %}
+{% if haproxy_listen.errorloc303 is defined and haproxy_listen.errorloc303 %}
+{% for item in haproxy_listen.errorloc303 %}
+    errorloc303 {{ item.code }} {{ item.url }}
+{% endfor %}
+{% endif %}
+
+{% if haproxy_listen.force_persist is defined %}
+    force-persist {{ haproxy_listen.force_persist }}
+{% endif %}
+
+{% if haproxy_listen.fullconn is defined %}
+    fullconn {{ haproxy_listen.fullconn }}
+{% endif %}
+
+{% if haproxy_listen.grace is defined %}
+    grace {{ haproxy_listen.grace }}
+{% endif %}
+
+{% if haproxy_listen.hash_type is defined %}
+    hash-type {{ haproxy_listen.hash_type.method }} {{ haproxy_listen.hash_type.function }} {{ haproxy_listen.hash_type.modifier }}
+{% endif %}
+
+{% if haproxy_listen.http_check_disable_on_404 is defined and haproxy_listen.http_check_disable_on_404 == True %}
+    http-check disable-on-404
+{% endif %}
+{% if haproxy_listen.http_check_expect is defined and haproxy_listen.http_check_expect %}
+    {% for item in haproxy_listen.http_check_expect %}
+    http-check expect {% if item.inverse is defined and item.inverse == True %} ! {% endif %} {{ item.match }} {{ item.pattern }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.http_check_send_state is defined and haproxy_listen.http_check_send_state == True %}
+    http-check send-state
+{% endif %}
+{% if haproxy_listen.http_request is defined and haproxy_listen.http_request %}
+    {% for http_request_item in haproxy_listen.http_request %}
+    http-request {{ http_request_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.http_response is defined and haproxy_listen.http_response %}
+    {% for http_response_item in haproxy_listen.http_response %}
+    http-response {{ http_response_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.http_send_name_header is defined %}
+    http-send-name-header {{ haproxy_listen.http_send_name_header }}
+{% endif %}
+
+{% if haproxy_listen.id is defined %}
+    id {{ haproxy_listen.id }}
+{% endif %}
+
+{% if haproxy_listen.ignore_persist is defined %}
+    ignore-persist {{ haproxy_listen.ignore_persist }}
+{% endif %}
+
+{% if haproxy_listen.log is defined %}
+    {% for log in haproxy_listen.log %}
+    log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
+    {% endfor %}
+{% endif %}
+{% if log.format is defined %}
+    log-format {{ log.format }}
+{% endif %}
+
+{% if haproxy_listen.max_keep_alive_queue is defined %}
+    max-keep-alive-queue {{ haproxy_listen.max_keep_alive_queue }}
+{% endif %}
+
+{% if haproxy_listen.maxconn is defined %}
+    max-keep-alive-queue {{ haproxy_listen.maxconn }}
+{% endif %}
+
+{% if haproxy_listen.monitor_fail is defined %}
+    monitor-fail {{ haproxy_listen.monitor_fail }}
+{% endif %}
+{% if haproxy_listen.monitor_net is defined %}
+    monitor-net {{ haproxy_listen.monitor_net }}
+{% endif %}
+{% if haproxy_listen.monitor_uri is defined %}
+    monitor-uri {{ haproxy_listen.monitor_uri }}
+{% endif %}
+
+{% if haproxy_listen.options is defined %}
+    {% for option in haproxy_listen.options %}
+    option {{ option }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.persist_rdp_cookie is defined and haproxy_listen.persist_rdp_cookie == True %}
+    persist rdp-cookie {{ haproxy_listen.persist_rdp_cookie_name }}
+{% endif %}
+
+{% if haproxy_listen.rate_limit_sessions is defined %}
+    rate-limit sessions {{ haproxy_listen.rate_limit_sessions }}
+{% endif %}
+
+{% if haproxy_listen.redirect is defined and haproxy_listen.redirect %}
+    {% for redirect_item in haproxy_listen.redirect %}
+    redirect {{ redirect_item }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.reqadd is defined and haproxy_listen.reqadd %}
+    {% for reqadd_item in haproxy_listen.reqadd %}
+    reqadd {{ reqadd_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqallow is defined and haproxy_listen.reqallow %}
+    {% for reqallow_item in haproxy_listen.reqallow %}
+    reqallow {{ reqallow_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqdel is defined and haproxy_listen.reqdel %}
+    {% for reqdel_item in haproxy_listen.reqdel %}
+    reqdel {{ reqdel_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqdeny is defined and haproxy_listen.reqdeny %}
+    {% for reqdeny_item in haproxy_listen.reqdeny %}
+    reqdeny {{ reqdeny_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqiallow is defined and haproxy_listen.reqiallow %}
+    {% for reqiallow_item in haproxy_listen.reqiallow %}
+    reqiallow {{ reqiallow_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqidel is defined and haproxy_listen.reqidel %}
+    {% for reqidel_item in haproxy_listen.reqidel %}
+    reqidel {{ reqidel_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqideny is defined and haproxy_listen.reqideny %}
+    {% for reqideny_item in haproxy_listen.reqideny %}
+    reqideny {{ reqideny_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqipass is defined and haproxy_listen.reqipass %}
+    {% for reqipass_item in haproxy_listen.reqipass %}
+    reqipass {{ reqipass_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqirep is defined and haproxy_listen.reqirep %}
+    {% for reqirep_item in haproxy_listen.reqirep %}
+    reqirep {{ reqirep_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqisetbe is defined and haproxy_listen.reqisetbe %}
+    {% for reqisetbe_item in haproxy_listen.reqisetbe %}
+    reqisetbe {{ reqisetbe_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqitarpit is defined and haproxy_listen.reqitarpit %}
+    {% for reqitarpit_item in haproxy_listen.reqitarpit %}
+    reqitarpit {{ reqitarpit_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqpass is defined and haproxy_listen.reqpass %}
+    {% for reqpass_item in haproxy_listen.reqpass %}
+    reqpass {{ reqpass_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqrep is defined and haproxy_listen.reqrep %}
+    {% for reqrep_item in haproxy_listen.reqrep %}
+    reqrep {{ reqrep_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqsetbe is defined and haproxy_listen.reqsetbe %}
+    {% for reqsetbe_item in haproxy_listen.reqsetbe %}
+    reqsetbe {{ reqsetbe_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.reqtarpit is defined and haproxy_listen.reqtarpit %}
+    {% for reqtarpit_item in haproxy_listen.reqtarpit %}
+    reqtarpit {{ reqtarpit_item }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.retries is defined %}
+    retries {{ haproxy_listen.retries }}
+{% endif %}
+
+{% if haproxy_listen.rspadd is defined and haproxy_listen.rspadd %}
+    {% for rspadd_item in haproxy_listen.rspadd %}
+    rspadd {{ rspadd_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.rspdel is defined and haproxy_listen.rspdel %}
+    {% for rspdel_item in haproxy_listen.rspdel %}
+    rspdel {{ rspdel_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.rspdeny is defined and haproxy_listen.rspdeny %}
+    {% for rspdeny_item in haproxy_listen.rspdeny %}
+    rspdeny {{ rspdeny_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.rspidel is defined and haproxy_listen.rspidel %}
+    {% for rspidel_item in haproxy_listen.rspidel %}
+    rspidel {{ rspidel_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.rspideny is defined and haproxy_listen.rspideny %}
+    {% for rspideny_item in haproxy_listen.rspideny %}
+    rspideny {{ rspideny_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.rspirep is defined and haproxy_listen.rspirep %}
+    {% for rspirep_item in haproxy_listen.rspirep %}
+    rspirep {{ rspirep_item }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.rsprep is defined and haproxy_listen.rsprep %}
+    {% for rsprep_item in haproxy_listen.rsprep %}
+    rsprep {{ rsprep_item }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.server is defined and haproxy_listen.server %}
+    {% for server_item in haproxy_listen.server %}
+    server {{ server_item }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.source is defined %}
+    retries {{ haproxy_listen.source }}
+{% endif %}
+
+{% if haproxy_listen.stats is defined %}
+    {% if haproxy_listen.stats.enabled is defined and haproxy_listen.stats.enabled == True %}
+    stats enable
+    {% endif %}
+    {% if haproxy_listen.stats.admin is defined %}
+    stats admin {{ haproxy_listen.stats.admin }}
+    {% endif %}
+    {% if haproxy_listen.stats.hide_version is defined and haproxy_listen.stats.hide_version == True %}
+    stats hide-version
+    {% endif %}
+    {% if haproxy_listen.stats.http_request is defined and haproxy_listen.stats.http_request %}
+    {% for http_request_item in haproxy_listen.stats.http_request %}
+    http-request {{ http_request_item }}
+    {% endfor %}
+    {% endif %}
+    {% if haproxy_listen.stats.uri is defined %}
+    stats uri {{ haproxy_listen.stats.uri }}
+    {% endif %}
+    {% if haproxy_listen.stats.realm is defined %}
+    stats realm {{ haproxy_listen.stats.realm }}
+    {% endif %}
+    {% if haproxy_listen.stats.auth is defined %}
+    stats auth {{ haproxy_listen.stats.auth }}
+    {% endif %}
+    {% if haproxy_listen.stats.refresh is defined %}
+    stats refresh {{ haproxy_listen.stats.refresh }}
+    {% endif %}
+    {% if haproxy_listen.stats.show_desc is defined %}
+    stats show-desc {{ haproxy_listen.stats.show_desc }}
+    {% endif %}
+    {% if haproxy_listen.stats.show_legends is defined  and haproxy_listen.stats.show_legends == True %}
+    stats show-legends
+    {% endif %}
+    {% if haproxy_listen.stats.scope is defined %}
+    stats scope {{ haproxy_listen.stats.scope }}
+    {% endif %}
+    {% if haproxy_listen.stats.show_node is defined %}
+    stats show-node {{ haproxy_listen.stats.show_node }}
+    {% endif %}
+{% endif %}
+
+{% if haproxy_listen.stick is defined %}
+    {% if haproxy_listen.stick.match is defined and haproxy_listen.stick.match %}
+    {% for stick_match_item in haproxy_listen.stick.match %}
+    stick match {{ stick_match_item }}
+    {% endfor %}
+    {% endif %}
+    {% if haproxy_listen.stick.on is defined and haproxy_listen.stick.on %}
+    {% for stick_on_item in haproxy_listen.stick.on %}
+    stick on {{ stick_on_item }}
+    {% endfor %}
+    {% endif %}
+    {% if haproxy_listen.stick.store_request is defined and haproxy_listen.stick.store_request %}
+    {% for stick_store_request_item in haproxy_listen.stick.store_request %}
+    stick store-request {{ stick_store_request_item }}
+    {% endfor %}
+    {% endif %}
+    {% if haproxy_listen.stick.store_response is defined and haproxy_listen.stick.store_response %}
+    {% for stick_store_response_item in haproxy_listen.stick.store_response %}
+    stick store-response {{ stick_store_response_item }}
+    {% endfor %}
+    {% endif %}
+    {% if haproxy_listen.stick.table is defined %}
+    stick-table {{ haproxy_listen.stick.table }}
+    {% endif %}
+{% endif %}
+
+{% if haproxy_listen.tcp_check is defined %}
+    {% for tcp_check_item in haproxy_listen.tcp_check %}
+    tcp-check {{ tcp_check_item.name }} {{ tcp_check_item.value }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.tcp_request is defined %}
+    {% for tcp_request_item in haproxy_listen.tcp_request %}
+    tcp-request {{ tcp_request_item.name }} {{ tcp_request_item.value }}
+    {% endfor %}
+{% endif %}
+{% if haproxy_listen.tcp_response is defined %}
+    {% for tcp_response_item in haproxy_listen.tcp_response %}
+    tcp-response {{ tcp_response_item.name }} {{ tcp_response_item.value }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.timeout is defined %}
+    {% for category in haproxy_listen.timeout %}
+    timeout {{ category.name }} {{ category.value }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.unique_id_format is defined %}
+    unique-id-format {{ haproxy_listen.unique_id_format }}
+{% endif %}
+{% if haproxy_listen.unique_id_header is defined %}
+    unique-id-header {{ haproxy_listen.unique_id_header }}
+{% endif %}
+
+{% if haproxy_listen.use_backend is defined %}
+    {% for use_backend_item in haproxy_listen.use_backend %}
+    use_backend {{ use_backend_item }}
+    {% endfor %}
+{% endif %}
+
+{% if haproxy_listen.use_server is defined %}
+    {% for use_server_item in haproxy_listen.use_server %}
+    use-server {{ use_server_item }}
+    {% endfor %}
+{% endif %}
+{% endfor %}

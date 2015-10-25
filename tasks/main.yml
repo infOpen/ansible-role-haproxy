@@ -1,0 +1,23 @@
+---
+
+# Tasks file for haproxy
+
+# Only 1.5 version is managed today
+- name : Check managed version
+  assert :
+    that :
+      - "haproxy_version_type != 'stable' or haproxy_version_number != '1.5'"
+
+- name: Load the OS specific varibles
+  include_vars: "{{ role_path }}/vars/{{ ansible_os_family }}.yml"
+
+- include: install_ubuntu.yml
+  tags:
+    - install
+    - haproxy
+  when: ansible_lsb.id == "Ubuntu"
+
+- include: configure.yml
+  tags:
+    - config
+    - haproxy

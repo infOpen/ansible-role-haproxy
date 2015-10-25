@@ -1,0 +1,7 @@
+---
+
+# HAProxy packages for Debian
+haproxy_packages :
+  - haproxy
+
+haproxy_service_name : haproxy

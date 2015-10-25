@@ -1,0 +1,21 @@
+# {{ ansible_managed }}
+
+#-------------------------------------------------------------------------------
+# Global configuration
+#-------------------------------------------------------------------------------
+{% for userlist in haproxy_userlists %}
+
+userlist {{ userlist.name }}
+
+{% if userlist.groups is defined and userlist.groups %}
+{% for group in userlist.groups %}
+    group {{ group.name }} {% if group.users is defined %} users {{ ','.join(group.users) }}{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if userlist.users is defined and userlist.users %}
+{% for user in userlist.users %}
+    user {{ user.name }} password {{ user.password }}{% if user.groups is defined %} groups {{ ','.join(user.groups) }}{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}

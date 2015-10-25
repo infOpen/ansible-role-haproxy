@@ -1,0 +1,123 @@
+# {{ ansible_managed }}
+
+#-------------------------------------------------------------------------------
+# Global configuration
+#-------------------------------------------------------------------------------
+
+global
+
+    # Process management and security
+    #--------------------------------
+{% if haproxy_global_process_mgmt.ca_base is defined %}
+    ca-base {{ haproxy_global_process_mgmt.ca_base }}
+{% endif %}
+{% if haproxy_global_process_mgmt.crt_base is defined %}
+    crt-base {{ haproxy_global_process_mgmt.crt_base }}
+{% endif %}
+{% if haproxy_global_process_mgmt.ssl_server_verify is defined %}
+    ssl-server-verify {{ haproxy_global_process_mgmt.ssl_server_verify }}
+{% endif %}
+{% if haproxy_global_process_mgmt.ssl_default_bind_ciphers is defined and haproxy_global_process_mgmt.ssl_default_bind_ciphers %}
+    ssl-default-bind-ciphers {{ haproxy_global_process_mgmt.ssl_default_bind_ciphers | join(':') }}
+{% endif %}
+{% if haproxy_global_process_mgmt.ssl_default_bind_options is defined and haproxy_global_process_mgmt.ssl_default_bind_options %}
+    ssl-default-bind-options {{ haproxy_global_process_mgmt.ssl_default_bind_options | join(' ') }}
+{% endif %}
+{% if haproxy_global_process_mgmt.ssl_default_server_ciphers is defined and haproxy_global_process_mgmt.ssl_default_server_ciphers %}
+    ssl-default-bind-ciphers {{ haproxy_global_process_mgmt.ssl_default_server_ciphers | join(':') }}
+{% endif %}
+{% if haproxy_global_process_mgmt.ssl_default_server_options is defined and haproxy_global_process_mgmt.ssl_default_server_options %}
+    ssl-default-bind-options {{ haproxy_global_process_mgmt.ssl_default_server_options | join(' ') }}
+{% endif %}
+
+{% if haproxy_global_process_mgmt.chroot is defined and haproxy_global_process_mgmt.chroot != False %}
+    chroot {{ haproxy_global_process_mgmt.chroot }}
+{% endif %}
+{% if haproxy_global_process_mgmt.daemon is defined and haproxy_global_process_mgmt.daemon == True %}
+    daemon
+{% endif %}
+
+{% if haproxy_global_process_mgmt.gid is defined %}
+    gid {{ haproxy_global_process_mgmt.gid }}
+{% elif haproxy_global_process_mgmt.group is defined %}
+    group {{ haproxy_global_process_mgmt.group }}
+{% endif %}
+
+{% if haproxy_global_process_mgmt.uid is defined %}
+    uid {{ haproxy_global_process_mgmt.uid }}
+{% elif haproxy_global_process_mgmt.user is defined %}
+    user {{ haproxy_global_process_mgmt.user }}
+{% endif %}
+
+{% if haproxy_global_process_mgmt.pidfile is defined %}
+    pidfile {{ haproxy_global_process_mgmt.pidfile }}
+{% endif %}
+{% if haproxy_global_process_mgmt.nbproc is defined %}
+    nbproc {{ haproxy_global_process_mgmt.nbproc }}
+{% endif %}
+{% if haproxy_global_process_mgmt.cpu_map is defined and haproxy_global_process_mgmt.cpu_map %}
+{% for map in haproxy_global_process_mgmt.cpu_map %}
+    map {{ map }}
+{% endfor %}
+{% endif %}
+{% if haproxy_global_process_mgmt.ulimit_n is defined and haproxy_global_process_mgmt.ulimit_n != False %}
+    ulimit-n {{ haproxy_global_process_mgmt.ulimit_n }}
+{% endif %}
+
+{% if haproxy_global_process_mgmt.node is defined %}
+    node {{ haproxy_global_process_mgmt.node }}
+{% endif %}
+{% if haproxy_global_process_mgmt.description is defined %}
+    node {{ haproxy_global_process_mgmt.description }}
+{% endif %}
+
+{% if haproxy_global_process_mgmt.unix_bind is defined and haproxy_global_process_mgmt.unix_bind != False %}
+    unix-bind {{ haproxy_global_process_mgmt.unix_bind }}
+{% endif %}
+
+{% if haproxy_global_process_mgmt.stats is defined %}
+{% if haproxy_global_process_mgmt.stats.socket is defined %}
+    stats socket {{ haproxy_global_process_mgmt.stats.socket }}
+{% endif %}
+{% if haproxy_global_process_mgmt.stats.timeout is defined %}
+    stats timeout {{ haproxy_global_process_mgmt.stats.timeout }}
+{% endif %}
+{% if haproxy_global_process_mgmt.stats.maxconn is defined %}
+    stats maxconn {{ haproxy_global_process_mgmt.stats.maxconn }}
+{% endif %}
+{% if haproxy_global_process_mgmt.stats.bind_process is defined %}
+    stats bind-process {{ haproxy_global_process_mgmt.stats.bind_process }}
+{% endif %}
+{% endif %}
+
+
+{% if haproxy_global_process_mgmt.log is defined %}
+{% for log in haproxy_global_process_mgmt.log %}
+    log {{ log.address }} {{ log.facility }}{% if log.max_level is defined %} {{ log.max_level }}{% endif %}{% if log.min_level is defined %} {{ log.min_level }}{% endif %}
+
+{% if log.format is defined %}
+    log-format {{ log.format }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if haproxy_global_process_mgmt.log_send_hostname is defined %}
+    log-send-hostname {{ haproxy_global_process_mgmt.log_send_hostname }}
+{% endif %}
+
+{% if haproxy_global_process_mgmt.log_tag is defined %}
+    log-tag {{ haproxy_global_process_mgmt.log_tag }}
+{% endif %}
+
+
+    # Performance tuning
+    #-------------------
+
+    # Debugging
+    #----------
+{% if haproxy_global_debugging.debug is defined and haproxy_global_debugging.debug == True %}
+    debug
+{% endif %}
+{% if haproxy_global_debugging.quiet is defined and haproxy_global_debugging.quiet == True %}
+    quiet
+{% endif %}
