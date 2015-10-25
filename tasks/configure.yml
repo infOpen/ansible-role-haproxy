@@ -10,7 +10,7 @@
 
 - name : Empty the folder if not already empty
   command : >
-    "find {{ haproxy_path_prefix_etc }}/conf.d -name *.cfg -exec rm -f {} \;"
+    find {{ haproxy_path_prefix_etc }}/conf.d -name *.cfg -exec rm -f {} \;
 
 
 - name: Generate the global configuration
