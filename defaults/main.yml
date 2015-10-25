@@ -72,11 +72,11 @@ haproxy_defaults :
       facility : local1
       level    : notice
   timeout :
-      - param : 'connect'
+      - name  : 'connect'
         value : '5000ms'
-      - param : 'client'
+      - name  : 'client'
         value : '50000ms'
-      - param : 'server'
+      - name  : 'server'
         value : '50000ms'
   options :
     - httpclose
