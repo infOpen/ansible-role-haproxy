@@ -17,14 +17,13 @@
   template :
     src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/global.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/01-global.cfg"
-  when : haproxy_global
 
 
 - name: Generate the default configuration
   template :
     src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/default.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/02-default.cfg"
-  when : haproxy_default
+  when : haproxy_defaults
 
 
 - name : Generate the frontends configuration
