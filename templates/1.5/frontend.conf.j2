@@ -8,9 +8,9 @@
 frontend {{ haproxy_frontend.name }}
 
 {% if haproxy_frontend.acl is defined and haproxy_frontend.acl %}
-    {% for acl_item in haproxy_frontend.acl %}
+{% for acl_item in haproxy_frontend.acl %}
     acl {{ acl_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.mode is defined %}
@@ -22,9 +22,9 @@ frontend {{ haproxy_frontend.name }}
 {% endif %}
 
 {% if haproxy_frontend.bind is defined and haproxy_frontend.bind %}
-    {% for bind in haproxy_frontend.bind %}
+{% for bind in haproxy_frontend.bind %}
     bind {{ bind }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.bind_process is defined %}
@@ -32,9 +32,9 @@ frontend {{ haproxy_frontend.name }}
 {% endif %}
 
 {% if haproxy_frontend.block is defined and haproxy_frontend.block %}
-    {% for block_item in haproxy_frontend.block %}
+{% for block_item in haproxy_frontend.block %}
     block {{ block_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.capture_cookie is defined %}
@@ -42,14 +42,14 @@ frontend {{ haproxy_frontend.name }}
 {% endif %}
 
 {% if haproxy_frontend.capture_request_header is defined and haproxy_frontend.capture_request_header %}
-    {% for crh_item in haproxy_frontend.capture_request_header %}
+{% for crh_item in haproxy_frontend.capture_request_header %}
     capture request header {{ crh_item.name }} len {{ crh_item.length }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.capture_response_header is defined and haproxy_frontend.capture_response_header %}
-    {% for crh_item in haproxy_frontend.capture_response_header %}
+{% for crh_item in haproxy_frontend.capture_response_header %}
     capture response header {{ crh_item.name }} len {{ crh_item.length }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.compression is defined %}
@@ -111,14 +111,14 @@ frontend {{ haproxy_frontend.name }}
 {% endif %}
 
 {% if haproxy_frontend.http_request is defined and haproxy_frontend.http_request %}
-    {% for http_request_item in haproxy_frontend.http_request %}
+{% for http_request_item in haproxy_frontend.http_request %}
     http-request {{ http_request_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.http_response is defined and haproxy_frontend.http_response %}
-    {% for http_response_item in haproxy_frontend.http_response %}
+{% for http_response_item in haproxy_frontend.http_response %}
     http-response {{ http_response_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.id is defined %}
@@ -154,9 +154,9 @@ frontend {{ haproxy_frontend.name }}
 {% endif %}
 
 {% if haproxy_frontend.options is defined %}
-    {% for option in haproxy_frontend.options %}
+{% for option in haproxy_frontend.options %}
     option {{ option }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.rate_limit_sessions is defined %}
@@ -164,133 +164,133 @@ frontend {{ haproxy_frontend.name }}
 {% endif %}
 
 {% if haproxy_frontend.redirect is defined and haproxy_frontend.redirect %}
-    {% for redirect_item in haproxy_frontend.redirect %}
+{% for redirect_item in haproxy_frontend.redirect %}
     redirect {{ redirect_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.reqadd is defined and haproxy_frontend.reqadd %}
-    {% for reqadd_item in haproxy_frontend.reqadd %}
+{% for reqadd_item in haproxy_frontend.reqadd %}
     reqadd {{ reqadd_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqallow is defined and haproxy_frontend.reqallow %}
-    {% for reqallow_item in haproxy_frontend.reqallow %}
+{% for reqallow_item in haproxy_frontend.reqallow %}
     reqallow {{ reqallow_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqdel is defined and haproxy_frontend.reqdel %}
-    {% for reqdel_item in haproxy_frontend.reqdel %}
+{% for reqdel_item in haproxy_frontend.reqdel %}
     reqdel {{ reqdel_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqdeny is defined and haproxy_frontend.reqdeny %}
-    {% for reqdeny_item in haproxy_frontend.reqdeny %}
+{% for reqdeny_item in haproxy_frontend.reqdeny %}
     reqdeny {{ reqdeny_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqiallow is defined and haproxy_frontend.reqiallow %}
-    {% for reqiallow_item in haproxy_frontend.reqiallow %}
+{% for reqiallow_item in haproxy_frontend.reqiallow %}
     reqiallow {{ reqiallow_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqidel is defined and haproxy_frontend.reqidel %}
-    {% for reqidel_item in haproxy_frontend.reqidel %}
+{% for reqidel_item in haproxy_frontend.reqidel %}
     reqidel {{ reqidel_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqideny is defined and haproxy_frontend.reqideny %}
-    {% for reqideny_item in haproxy_frontend.reqideny %}
+{% for reqideny_item in haproxy_frontend.reqideny %}
     reqideny {{ reqideny_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqipass is defined and haproxy_frontend.reqipass %}
-    {% for reqipass_item in haproxy_frontend.reqipass %}
+{% for reqipass_item in haproxy_frontend.reqipass %}
     reqipass {{ reqipass_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqirep is defined and haproxy_frontend.reqirep %}
-    {% for reqirep_item in haproxy_frontend.reqirep %}
+{% for reqirep_item in haproxy_frontend.reqirep %}
     reqirep {{ reqirep_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqisetbe is defined and haproxy_frontend.reqisetbe %}
-    {% for reqisetbe_item in haproxy_frontend.reqisetbe %}
+{% for reqisetbe_item in haproxy_frontend.reqisetbe %}
     reqisetbe {{ reqisetbe_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqitarpit is defined and haproxy_frontend.reqitarpit %}
-    {% for reqitarpit_item in haproxy_frontend.reqitarpit %}
+{% for reqitarpit_item in haproxy_frontend.reqitarpit %}
     reqitarpit {{ reqitarpit_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqpass is defined and haproxy_frontend.reqpass %}
-    {% for reqpass_item in haproxy_frontend.reqpass %}
+{% for reqpass_item in haproxy_frontend.reqpass %}
     reqpass {{ reqpass_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqrep is defined and haproxy_frontend.reqrep %}
-    {% for reqrep_item in haproxy_frontend.reqrep %}
+{% for reqrep_item in haproxy_frontend.reqrep %}
     reqrep {{ reqrep_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqsetbe is defined and haproxy_frontend.reqsetbe %}
-    {% for reqsetbe_item in haproxy_frontend.reqsetbe %}
+{% for reqsetbe_item in haproxy_frontend.reqsetbe %}
     reqsetbe {{ reqsetbe_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.reqtarpit is defined and haproxy_frontend.reqtarpit %}
-    {% for reqtarpit_item in haproxy_frontend.reqtarpit %}
+{% for reqtarpit_item in haproxy_frontend.reqtarpit %}
     reqtarpit {{ reqtarpit_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.rspadd is defined and haproxy_frontend.rspadd %}
-    {% for rspadd_item in haproxy_frontend.rspadd %}
+{% for rspadd_item in haproxy_frontend.rspadd %}
     rspadd {{ rspadd_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.rspdel is defined and haproxy_frontend.rspdel %}
-    {% for rspdel_item in haproxy_frontend.rspdel %}
+{% for rspdel_item in haproxy_frontend.rspdel %}
     rspdel {{ rspdel_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.rspdeny is defined and haproxy_frontend.rspdeny %}
-    {% for rspdeny_item in haproxy_frontend.rspdeny %}
+{% for rspdeny_item in haproxy_frontend.rspdeny %}
     rspdeny {{ rspdeny_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.rspidel is defined and haproxy_frontend.rspidel %}
-    {% for rspidel_item in haproxy_frontend.rspidel %}
+{% for rspidel_item in haproxy_frontend.rspidel %}
     rspidel {{ rspidel_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.rspideny is defined and haproxy_frontend.rspideny %}
-    {% for rspideny_item in haproxy_frontend.rspideny %}
+{% for rspideny_item in haproxy_frontend.rspideny %}
     rspideny {{ rspideny_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.rspirep is defined and haproxy_frontend.rspirep %}
-    {% for rspirep_item in haproxy_frontend.rspirep %}
+{% for rspirep_item in haproxy_frontend.rspirep %}
     rspirep {{ rspirep_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_frontend.rsprep is defined and haproxy_frontend.rsprep %}
-    {% for rsprep_item in haproxy_frontend.rsprep %}
+{% for rsprep_item in haproxy_frontend.rsprep %}
     rsprep {{ rsprep_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.tcp_request is defined %}
-    {% for tcp_request_item in haproxy_frontend.tcp_request %}
+{% for tcp_request_item in haproxy_frontend.tcp_request %}
     tcp-request {{ tcp_request_item.name }} {{ tcp_request_item.value }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.timeout is defined %}
-    {% for category in haproxy_frontend.timeout %}
+{% for category in haproxy_frontend.timeout %}
     timeout {{ category.name }} {{ category.value }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_frontend.unique_id_format is defined %}
@@ -301,8 +301,8 @@ frontend {{ haproxy_frontend.name }}
 {% endif %}
 
 {% if haproxy_frontend.use_backend is defined %}
-    {% for use_backend_item in haproxy_frontend.use_backend %}
+{% for use_backend_item in haproxy_frontend.use_backend %}
     use_backend {{ use_backend_item }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% endfor %}
