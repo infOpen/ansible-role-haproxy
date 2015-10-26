@@ -30,7 +30,7 @@ haproxy_global_process_mgmt :
   pidfile  : "/var/run/haproxy.pid"
   ulimit_n : False
   node     : "{{ ansible_hostname }}"
-  description : ''
+  description : 'foobar'
   stats :
     socket  : "/run/haproxy/admin.sock"
     timeout : 30s

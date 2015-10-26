@@ -68,7 +68,7 @@ global
     node {{ haproxy_global_process_mgmt.node }}
 {% endif %}
 {% if haproxy_global_process_mgmt.description is defined %}
-    node {{ haproxy_global_process_mgmt.description }}
+    description "{{ haproxy_global_process_mgmt.description }}"
 {% endif %}
 
 {% if haproxy_global_process_mgmt.unix_bind is defined and haproxy_global_process_mgmt.unix_bind != False %}
