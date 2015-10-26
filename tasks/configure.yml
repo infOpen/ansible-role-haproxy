@@ -10,21 +10,20 @@
 
 - name : Empty the folder if not already empty
   command : >
-    "find {{ haproxy_path_prefix_etc }}/conf.d -name *.cfg -exec rm -f {} \;"
+    find {{ haproxy_path_prefix_etc }}/conf.d -name *.cfg -exec rm -f {} \;
 
 
 - name: Generate the global configuration
   template :
     src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/global.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/01-global.cfg"
-  when : haproxy_global
 
 
 - name: Generate the default configuration
   template :
-    src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/default.conf.j2"
+    src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/defaults.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/02-default.cfg"
-  when : haproxy_default
+  when : haproxy_defaults
 
 
 - name : Generate the frontends configuration
@@ -58,6 +57,7 @@
 - name : Assemble the final configuration file
   assemble :
     src    : "{{ haproxy_path_prefix_etc }}/conf.d"
-    dest   : "{{ config_location }}"
+    dest   : "{{ haproxy_config_location }}"
     backup : True
+  register : debug_haproxy_assemble
   notify : restart haproxy

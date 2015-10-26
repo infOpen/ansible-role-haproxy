@@ -68,7 +68,7 @@ global
     node {{ haproxy_global_process_mgmt.node }}
 {% endif %}
 {% if haproxy_global_process_mgmt.description is defined %}
-    node {{ haproxy_global_process_mgmt.description }}
+    description "{{ haproxy_global_process_mgmt.description }}"
 {% endif %}
 
 {% if haproxy_global_process_mgmt.unix_bind is defined and haproxy_global_process_mgmt.unix_bind != False %}
@@ -95,10 +95,10 @@ global
 {% for log in haproxy_global_process_mgmt.log %}
     log {{ log.address }} {{ log.facility }}{% if log.max_level is defined %} {{ log.max_level }}{% endif %}{% if log.min_level is defined %} {{ log.min_level }}{% endif %}
 
-{% if log.format is defined %}
-    log-format {{ log.format }}
-{% endif %}
 {% endfor %}
+{% endif %}
+{% if haproxy_global_process_mgmt.log_format is defined %}
+    log-format {{ haproxy_global_process_mgmt.log_format }}
 {% endif %}
 
 {% if haproxy_global_process_mgmt.log_send_hostname is defined %}

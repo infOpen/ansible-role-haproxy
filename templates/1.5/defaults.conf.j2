@@ -15,13 +15,13 @@ defaults
 {% endif %}
 
 {% if haproxy_defaults.balances is defined and haproxy_defaults.balances %}
-    {% for balance in haproxy_defaults.balances %}
+{% for balance in haproxy_defaults.balances %}
     {% if balance.url_param is defined and balance.url_param == True %}
     balance url_param {{ balance.param }}{% if balance.check_post is defined %}{{ balance.check_post }}{% endif %}
     {% else %}
     balance {{ balance.algorithm }} {{ balance.arguments }}
     {% endif %}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_defaults.bind_process is defined %}
@@ -41,9 +41,9 @@ defaults
 {% endif %}
 
 {% if haproxy_defaults.cookies is defined and haproxy_defaults.cookies %}
-    {% for cookie in haproxy_defaults.cookies %}
+{% for cookie in haproxy_defaults.cookies %}
     cookie {{ cookie.name }} {{ cookie.options }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_defaults.default_server_options is defined and haproxy_defaults.default_server_options %}
@@ -99,9 +99,9 @@ defaults
     http-check disable-on-404
 {% endif %}
 {% if haproxy_defaults.http_check_expect is defined and haproxy_defaults.http_check_expect %}
-    {% for item in haproxy_defaults.http_check_expect %}
+{% for item in haproxy_defaults.http_check_expect %}
     http-check expect {% if item.inverse is defined and item.inverse == True %} ! {% endif %} {{ item.match }} {{ item.pattern }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 {% if haproxy_defaults.http_check_send_state is defined and haproxy_defaults.http_check_send_state == True %}
     http-check send-state
@@ -113,12 +113,13 @@ defaults
 
 
 {% if haproxy_defaults.log is defined %}
-    {% for log in haproxy_defaults.log %}
-    log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
-    {% endfor %}
+{% for log in haproxy_defaults.log %}
+    log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{ log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
+
+{% endfor %}
 {% endif %}
-{% if log.format is defined %}
-    log-format {{ log.format }}
+{% if haproxy_defaults.log_format is defined %}
+    log-format {{ haproxy_defaults.log_format }}
 {% endif %}
 
 {% if haproxy_defaults.max_keep_alive_queue is defined %}
@@ -139,9 +140,9 @@ defaults
 
 
 {% if haproxy_defaults.options is defined %}
-    {% for option in haproxy_defaults.options %}
+{% for option in haproxy_defaults.options %}
     option {{ option }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 
@@ -197,9 +198,9 @@ defaults
 
 
 {% if haproxy_defaults.timeout is defined %}
-    {% for category in haproxy_defaults.timeout %}
+{% for category in haproxy_defaults.timeout %}
     timeout {{ category.name }} {{ category.value }}
-    {% endfor %}
+{% endfor %}
 {% endif %}
 
 {% if haproxy_defaults.unique_id_format is defined %}

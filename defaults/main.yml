@@ -9,6 +9,9 @@ haproxy_version_type   : "stable"
 # Path prefix
 haproxy_path_prefix_etc : "/etc/haproxy"
 
+# Final config file
+haproxy_config_location : "/etc/haproxy/haproxy.cfg"
+
 # Data variables
 haproxy_frontends : []
 haproxy_backends  : []
@@ -27,7 +30,7 @@ haproxy_global_process_mgmt :
   pidfile  : "/var/run/haproxy.pid"
   ulimit_n : False
   node     : "{{ ansible_hostname }}"
-  description : ''
+  description : 'foobar'
   stats :
     socket  : "/run/haproxy/admin.sock"
     timeout : 30s
@@ -66,5 +69,37 @@ haproxy_global_debugging :
   quiet : False
 
 haproxy_defaults :
+  mode : http
+  log  :
+    - address  : /dev/log
+      facility : local1
+      level    : notice
+  timeout :
+      - name  : 'connect'
+        value : '5000ms'
+      - name  : 'client'
+        value : '50000ms'
+      - name  : 'server'
+        value : '50000ms'
+  options :
+    - httpclose
+    - forwardfor except 127.0.0.0/8
+    - redispatch
+    - abortonclose
+    - httplog
+    - dontlognull
+  errorfile :
+      - code : 400
+        file : /etc/haproxy/errors/400.http
+      - code : 403
+        file : /etc/haproxy/errors/403.http
+      - code : 408
+        file : /etc/haproxy/errors/408.http
+      - code : 500
+        file : /etc/haproxy/errors/500.http
+      - code : 502
+        file : /etc/haproxy/errors/502.http
+      - code : 504
+        file : /etc/haproxy/errors/504.http
   persist_rdp_cookie      : True
   persist_rdp_cookie_name : 'msts'
