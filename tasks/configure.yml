@@ -65,3 +65,4 @@
 
 - debug :
     msg : "{{ lookup('file', haproxy_config_location) }}"
+    sudo : True
