@@ -59,10 +59,10 @@
     src    : "{{ haproxy_path_prefix_etc }}/conf.d"
     dest   : "{{ haproxy_config_location }}"
     backup : True
+  register : debug_haproxy_assemble
   notify : restart haproxy
 
 
 
 - debug :
-    msg : "{{ lookup('file', haproxy_config_location) }}"
-    sudo : True
+    var : debug_haproxy_assemble
