@@ -178,9 +178,10 @@ listen {{ haproxy_listen.name }}
 {% endif %}
 
 {% if haproxy_listen.log is defined %}
-    {% for log in haproxy_listen.log %}
+{% for log in haproxy_listen.log %}
     log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
-    {% endfor %}
+
+{% endfor %}
 {% endif %}
 {% if haproxy_listen.log_format is defined %}
     log-format {{ haproxy_listen.log_format }}

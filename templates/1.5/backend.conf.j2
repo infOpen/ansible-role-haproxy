@@ -150,9 +150,10 @@ backend {{ haproxy_backend.name }}
 {% endif %}
 
 {% if haproxy_backend.log is defined %}
-    {% for log in haproxy_backend.log %}
+{% for log in haproxy_backend.log %}
     log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
-    {% endfor %}
+
+{% endfor %}
 {% endif %}
 
 {% if haproxy_backend.max_keep_alive_queue is defined %}
