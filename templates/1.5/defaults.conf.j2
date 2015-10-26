@@ -114,7 +114,7 @@ defaults
 
 {% if haproxy_defaults.log is defined %}
     {% for log in haproxy_defaults.log %}
-    log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
+    log {{ log.address }} {{ log.facility }}{% if log.level is defined %} {{ log.level }}{% endif %}{% if log.minlevel is defined %} {{ log.minlevel }}{% endif %}
     {% endfor %}
 {% endif %}
 {% if haproxy_defaults.log_format is defined %}

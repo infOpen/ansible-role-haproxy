@@ -60,3 +60,8 @@
     dest   : "{{ haproxy_config_location }}"
     backup : True
   notify : restart haproxy
+
+
+
+- debug :
+  msg : "{{ lookup('file', haproxy_config_location) }}"
