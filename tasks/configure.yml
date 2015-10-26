@@ -61,8 +61,3 @@
     backup : True
   register : debug_haproxy_assemble
   notify : restart haproxy
-
-
-
-- debug :
-    var : debug_haproxy_assemble
