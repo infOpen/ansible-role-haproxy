@@ -7,13 +7,15 @@
 #-------------------------------------------------------------------------------
 
 # Check comptability 1.5 version
-- fail : Check if stable 1.5 version not exists
+- fail :
+    msg : Check if stable 1.5 version not exists
   when :
     - haproxy_version_type         == "stable"
     - ansible_distribution_release == "precise"
     - ansible_distribution_version == "12.04"
 
-- fail : Stable 1.6 version not exists
+- fail :
+    msg : Stable 1.6 version not exists
   when :
     - haproxy_version_type   == "stable"
     - haproxy_version_number == "1.6"
