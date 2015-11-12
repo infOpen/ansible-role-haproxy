@@ -3,6 +3,7 @@
 # Handlers file for haproxy
 
 - name : restart haproxy
+  become : True
   service :
     name  : "{{ haproxy_service_name }}"
     state : restarted
