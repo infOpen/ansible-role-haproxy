@@ -7,13 +7,15 @@
 #-------------------------------------------------------------------------------
 
 # Check comptability 1.5 version
-- fail : Check if stable 1.5 version not exists
+- fail :
+    msg : Check if stable 1.5 version not exists
   when :
     - haproxy_version_type         == "stable"
     - ansible_distribution_release == "precise"
     - ansible_distribution_version == "12.04"
 
-- fail : Stable 1.6 version not exists
+- fail :
+    msg : Stable 1.6 version not exists
   when :
     - haproxy_version_type   == "stable"
     - haproxy_version_number == "1.6"
@@ -21,6 +23,7 @@
 
 # Enable dedicated PPA to install latest version
 - name : Enable PPA for latest haproxy for the version
+  become : True
   apt_repository :
     repo  : "ppa:vbernat/haproxy-{{ haproxy_version_number }}"
     state : present
@@ -31,6 +34,7 @@
 
 # Enable dedicated PPA to install latest 1.5 on ubuntu Trusty
 - name : Enable PPA for stable 1.5 on Trusty
+  become : True
   apt_repository :
     repo : "deb http://archive.ubuntu.com/ubuntu trusty-backports main universe"
     state : present
@@ -51,6 +55,7 @@
 
 
 - name : Install stable packages for trusty
+  become : True
   apt  :
     name  : "{{ item }}"
     state : present
@@ -64,10 +69,12 @@
 
 
 - name : Install packages
+  become : True
   apt  :
     name  : "{{ item }}"
     state : present
     cache_valid_time : 3600
   with_items : "{{ haproxy_packages }}"
   when :
-    - haproxy_stable_trusty_install.skipped == True
+    - haproxy_stable_trusty_install | skipped
+

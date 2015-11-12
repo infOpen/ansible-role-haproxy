@@ -3,23 +3,27 @@
 # Configuration tasks for haproxy
 
 - name : Create directory to store splitted configuration
+  become : True
   file :
     path  : "{{ haproxy_path_prefix_etc }}/conf.d"
     state : directory
 
 
 - name : Empty the folder if not already empty
+  become : True
   command : >
     find {{ haproxy_path_prefix_etc }}/conf.d -name *.cfg -exec rm -f {} \;
 
 
 - name: Generate the global configuration
+  become : True
   template :
     src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/global.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/01-global.cfg"
 
 
 - name: Generate the default configuration
+  become : True
   template :
     src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/defaults.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/02-default.cfg"
@@ -27,6 +31,7 @@
 
 
 - name : Generate the frontends configuration
+  become : True
   template :
     src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/frontends.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/03-frontends.cfg"
@@ -34,6 +39,7 @@
 
 
 - name : Generate the backends configuration
+  become : True
   template :
     src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/backends.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/04-backends.cfg"
@@ -41,6 +47,7 @@
 
 
 - name : Generate the listens configuration
+  become : True
   template :
     src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/listens.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/05-listens.cfg"
@@ -48,6 +55,7 @@
 
 
 - name : Generate the userlists configuration
+  become : True
   template :
     src  : "{{ role_path }}/templates/{{ haproxy_version_number }}/userlists.conf.j2"
     dest : "{{ haproxy_path_prefix_etc }}/conf.d/06-userlists.cfg"
@@ -55,9 +63,11 @@
 
 
 - name : Assemble the final configuration file
+  become : True
   assemble :
     src    : "{{ haproxy_path_prefix_etc }}/conf.d"
     dest   : "{{ haproxy_config_location }}"
     backup : True
   register : debug_haproxy_assemble
   notify : restart haproxy
+

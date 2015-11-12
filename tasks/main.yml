@@ -3,7 +3,8 @@
 # Tasks file for haproxy
 
 # Only 1.5 version is managed today
-- fail : Not managed version
+- fail :
+    msg : Not managed version
   when :
     - haproxy_version_number != "1.5"
 

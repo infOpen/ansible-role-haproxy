@@ -1,0 +1,6 @@
+# Ignore swap files
+.*.swp
+
+# Ignore Vagrant directory
+.vagrant
+
