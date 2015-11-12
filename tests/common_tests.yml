@@ -2,3 +2,16 @@
 
 # Common tests for haproxy role
 
+- name : Check if Haproxy is started
+  become   : True
+  register : haproxy_test_service_started
+  service  :
+    name : "{{ haproxy_service_name }}"
+    state : started
+  ignore_errors : True
+
+- name : Haproxy service should be started
+  fail :
+    msg : "Haproxy is not running"
+  when : haproxy_test_service_started | failed
+
