@@ -2,6 +2,9 @@
 
 # Defaults file for haproxy
 
+# Packaging vers
+haproxy_repository_prefix : ""
+
 # Version to install
 haproxy_version_number : "1.5"
 haproxy_version_type   : "stable"
@@ -103,3 +106,4 @@ haproxy_defaults :
         file : /etc/haproxy/errors/504.http
   persist_rdp_cookie      : True
   persist_rdp_cookie_name : 'msts'
+
