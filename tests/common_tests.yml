@@ -16,10 +16,14 @@
   register : haproxy_test_repository_latest
   stat :
     path : >
-      "{{ haproxy_repository_prefix }}/haproxy-{{ haproxy_version_number}}.list"
+      {{ haproxy_repository_prefix -}}
+      /ppa_vbernat_haproxy_
+      {{- haproxy_version_number | replace('.', '_') }}_
+      {{- ansible_distribution_release }}.list
   failed_when : haproxy_test_repository_latest.stat.exists == False
   when :
-    - haproxy_version_type         == "latest"
+    - haproxy_version_type == "latest"
+    - ansible_os_family    == "Debian"
 
 - name : Check if Haproxy is started
   become   : True
