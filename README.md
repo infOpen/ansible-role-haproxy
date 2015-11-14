@@ -70,7 +70,7 @@ Default role variables
         - "!aNULL"
         - "!eNULL"
       ssl_default_bind_options   : []
-      ssl_default_server_options : []
+      ssl_default_server_ciphers : []
       ssl_default_server_options : []
 
     haproxy_global_performance : {}
