@@ -14,19 +14,12 @@
 
 - name : Check repository file for latest version
   register : haproxy_test_repository_latest
-  vars :
-    haproxy_test_repository_file : >
-      {{ haproxy_repository_prefix -}}
-      /ppa_vbernat_haproxy_
-      {{- haproxy_version_number | replace('.', '_') }}_
-      {{- ansible_distribution_release }}.list
   stat :
-    path : "{{ item }}"
+    path : "{{- haproxy_repository_prefix
+      ~ '/ppa_vbernat_haproxy_'
+      ~ haproxy_version_number | replace('.', '_') ~ '_'
+      ~ ansible_distribution_release ~ '.list' -}}"
   failed_when : haproxy_test_repository_latest.stat.exists == False
-  with_items :
-    - "{{ haproxy_test_repository_file
-      if ansible_version | version_compare('2.0', '<')
-      else haproxy_test_repository_file[:-1] }}"
   when :
     - haproxy_version_type == "latest"
     - ansible_os_family    == "Debian"
