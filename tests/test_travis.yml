@@ -8,3 +8,6 @@
     haproxy_version_type : "latest"
   roles:
     - ansible-role-haproxy
+  post_tasks :
+    - include : ./common_tests.yml
+

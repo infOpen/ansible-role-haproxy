@@ -2,6 +2,28 @@
 
 # Common tests for haproxy role
 
+- name : Check repository file on Trusty for stable 1.5
+  register : haproxy_test_repository_trusty_stable_15
+  stat :
+    path : "{{ haproxy_repository_prefix }}/archive_ubuntu_com_ubuntu.list"
+  failed_when : haproxy_test_repository_trusty_stable_15.stat.exists == False
+  when :
+    - haproxy_version_number       == "1.5"
+    - haproxy_version_type         == "stable"
+    - ansible_distribution_release == "trusty"
+
+- name : Check repository file for latest version
+  register : haproxy_test_repository_latest
+  stat :
+    path : "{{- haproxy_repository_prefix
+      ~ '/ppa_vbernat_haproxy_'
+      ~ haproxy_version_number | replace('.', '_') ~ '_'
+      ~ ansible_distribution_release ~ '.list' -}}"
+  failed_when : haproxy_test_repository_latest.stat.exists == False
+  when :
+    - haproxy_version_type == "latest"
+    - ansible_os_family    == "Debian"
+
 - name : Check if Haproxy is started
   become   : True
   register : haproxy_test_service_started
