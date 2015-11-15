@@ -5,3 +5,6 @@ haproxy_packages :
   - haproxy
 
 haproxy_service_name : haproxy
+
+haproxy_repository_prefix : /etc/apt/sources.list.d
+
