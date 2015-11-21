@@ -48,7 +48,7 @@ defaults
     default-server {{ haproxy_defaults.default_server_options | join(' ') }}
 {% endif %}
 {% if haproxy_defaults.default_backend is defined %}
-    default-backend {{ haproxy_defaults.default_backend }}
+    default_backend {{ haproxy_defaults.default_backend }}
 {% endif %}
 
 {% if haproxy_defaults.disabled is defined and haproxy_defaults.disabled %}

@@ -63,7 +63,7 @@ frontend {{ haproxy_frontend.name }}
 {% endif %}
 
 {% if haproxy_frontend.default_backend is defined %}
-    default-backend {{ haproxy_frontend.default_backend }}
+    default_backend {{ haproxy_frontend.default_backend }}
 {% endif %}
 
 {% if haproxy_frontend.description is defined %}
