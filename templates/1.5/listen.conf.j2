@@ -86,7 +86,7 @@ listen {{ haproxy_listen.name }}
     default-server {{ haproxy_listen.default_server_options | join(' ') }}
 {% endif %}
 {% if haproxy_listen.default_backend is defined %}
-    default-backend {{ haproxy_listen.default_backend }}
+    default_backend {{ haproxy_listen.default_backend }}
 {% endif %}
 
 {% if haproxy_listen.description is defined %}
