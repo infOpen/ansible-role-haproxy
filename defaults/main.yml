@@ -8,6 +8,7 @@ haproxy_repository_prefix : ""
 # Version to install
 haproxy_version_number : "1.5"
 haproxy_version_type   : "stable"
+haproxy_service_state : "present"
 
 # Path prefix
 haproxy_path_prefix_etc : "/etc/haproxy"

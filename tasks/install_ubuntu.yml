@@ -58,7 +58,7 @@
   become : True
   apt  :
     name  : "{{ item }}"
-    state : present
+    state : "{{ haproxy_service_state }}"
     cache_valid_time : 3600
     default_release  : "trusty-backports"
   register   : haproxy_stable_trusty_install
@@ -72,7 +72,7 @@
   become : True
   apt  :
     name  : "{{ item }}"
-    state : present
+    state : "{{ haproxy_service_state }}"
     cache_valid_time : 3600
   with_items : "{{ haproxy_packages }}"
   when :
