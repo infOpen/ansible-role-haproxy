@@ -75,8 +75,8 @@
     state : "{{ haproxy_service_state }}"
     cache_valid_time : 3600
   with_items : "{{ haproxy_packages }}"
-  when :
-    - (haproxy_stable_trusty_install.results[0].skipped is defined
-      and haproxy_stable_trusty_install.results[0].skipped) or
-      haproxy_stable_trusty_install.skipped
+  when : >
+    (haproxy_stable_trusty_install.results[0].skipped is defined
+    and haproxy_stable_trusty_install.results[0].skipped)
+    or (haproxy_stable_trusty_install.skipped)
 
