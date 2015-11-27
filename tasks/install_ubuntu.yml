@@ -67,6 +67,8 @@
     - ansible_distribution_version == "14.04"
     - haproxy_version_type         == "stable"
 
+- debug:
+    var: haproxy_stable_trusty_install
 
 - name : Install packages
   become : True
