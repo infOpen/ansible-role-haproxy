@@ -67,6 +67,22 @@
     - ansible_distribution_version == "14.04"
     - haproxy_version_type         == "stable"
 
+- debug:
+    msg: >
+      {{ ((haproxy_stable_trusty_install.skipped is defined
+      and haproxy_stable_trusty_install.skipped) | bool == True) }}
+
+- debug:
+    msg: >
+      {{ ((haproxy_stable_trusty_install.results[0].skipped is defined                
+      and haproxy_stable_trusty_install.results[0].skipped) | bool == True) }}
+    
+- debug:
+    msg: >
+      ((haproxy_stable_trusty_install.results[0].skipped is defined
+      and haproxy_stable_trusty_install.results[0].skipped) | bool == True)
+      or ((haproxy_stable_trusty_install.skipped is defined
+      and haproxy_stable_trusty_install.skipped) | bool == True)
 
 - name : Install packages
   become : True
@@ -76,7 +92,8 @@
     cache_valid_time : 3600
   with_items : "{{ haproxy_packages }}"
   when : >
-    (haproxy_stable_trusty_install.results[0].skipped is defined
-    and haproxy_stable_trusty_install.results[0].skipped)
-    or (haproxy_stable_trusty_install.skipped)
+    ((haproxy_stable_trusty_install.results[0].skipped is defined
+    and haproxy_stable_trusty_install.results[0].skipped) | bool == True)
+    or ((haproxy_stable_trusty_install.skipped is defined
+    and haproxy_stable_trusty_install.skipped) | bool == True)
 
