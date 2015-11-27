@@ -81,10 +81,10 @@
     
 - debug:
     msg: >
-      ((haproxy_stable_trusty_install.results[0].skipped is defined
+      {{ ((haproxy_stable_trusty_install.results[0].skipped is defined
       and haproxy_stable_trusty_install.results[0].skipped) | bool == True)
       or ((haproxy_stable_trusty_install.skipped is defined
-      and haproxy_stable_trusty_install.skipped) | bool == True)
+      and haproxy_stable_trusty_install.skipped) | bool == True) }}
 
 - name : Install packages
   become : True
