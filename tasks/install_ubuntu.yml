@@ -67,8 +67,6 @@
     - ansible_distribution_version == "14.04"
     - haproxy_version_type         == "stable"
 
-- debug:
-    var: haproxy_stable_trusty_install
 
 - name : Install packages
   become : True
@@ -80,5 +78,5 @@
   when :
     - (haproxy_stable_trusty_install.results[0].skipped is defined
       and haproxy_stable_trusty_install.results[0].skipped) or
-      haproxy_stable_trusty_install | skipped
+      haproxy_stable_trusty_install.skipped
 
