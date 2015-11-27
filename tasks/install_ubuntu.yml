@@ -76,5 +76,6 @@
     cache_valid_time : 3600
   with_items : "{{ haproxy_packages }}"
   when :
+    - haproxy_stable_trusty_install.results[0].skipped is defined
     - haproxy_stable_trusty_install.results[0].skipped
 
