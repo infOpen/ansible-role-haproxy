@@ -1,6 +1,14 @@
-# Ignore swap files
-.*.swp
+# Swap files
+*.swp
 
-# Ignore Vagrant directory
+# Python bytecode
+*.pyc
+
+# Pytest
+.cache
+
+# Vagrant
 .vagrant
 
+# Bundle
+.bundle

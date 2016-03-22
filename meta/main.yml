@@ -1,17 +1,18 @@
 ---
+
 galaxy_info:
   author: Alexandre Chaussier
-  description: install haproxy package
+  description: Install and manage haproxy
   company: Infopen (http://www.infopen.pro)
   license: MIT
-  min_ansible_version: 1.5
+  min_ansible_version: 2.0
+  github_branch: master
   platforms:
     - name: Ubuntu
       versions:
         - trusty
-        - utopic
-
-  categories:
+  galaxy_tags:
     - system
     - networking
 dependencies: []
+
