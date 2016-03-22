@@ -50,10 +50,6 @@
 # Package Installation
 #-------------------------------------------------------------------------------
 
-- name : Include specific vars
-  include_vars : "{{ role_path }}/vars/Debian.yml"
-
-
 - name : Install stable packages for trusty
   become : True
   apt  :
